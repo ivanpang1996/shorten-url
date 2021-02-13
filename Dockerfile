@@ -1,4 +1,4 @@
-FROM openjdk:15-jdk
+FROM openjdk:11-jdk
 EXPOSE 8080
 ARG JAR_FILE=build/libs/shorten-url-0.0.1-SNAPSHOT.jar
 ADD ${JAR_FILE} url.jar
