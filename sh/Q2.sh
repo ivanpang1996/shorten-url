@@ -7,6 +7,6 @@ if [ -z "${ip}" ]
 then
   echo "Host not found"
 else
-  echo ssh ec2-user@"${ip}"
+  ssh ec2-user@"${ip}"
 fi
 
