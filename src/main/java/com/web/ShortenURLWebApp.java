@@ -7,7 +7,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.retry.annotation.EnableRetry;
 
+@EnableRetry
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class ShortenURLWebApp {
     public static void main(String[] args) {

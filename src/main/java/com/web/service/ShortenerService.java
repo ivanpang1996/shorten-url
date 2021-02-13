@@ -4,10 +4,13 @@ import com.web.domain.URL;
 import com.web.repository.URLRedisRepository;
 import com.web.repository.URLRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.UUID;
 
 /**
@@ -20,20 +23,16 @@ public class ShortenerService {
     @Autowired
     URLRepository repository;
 
+    @Retryable(value = SQLIntegrityConstraintViolationException.class, maxAttempts = 10, backoff = @Backoff(3000))  //retry 10 time when duplicate entry
     public ShortenURLResponse save(ShortenURLRequest request) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");
-        String suffix = generateSuffix(request.getUrl(), md, null);
+        String suffix = generateSuffix(request.getUrl(), md);
         System.out.println(suffix);
 
         var url = new URL();
         url.suffix = suffix;
         url.longUrl = request.getUrl();
-        try {
-            saveDB(url);
-        } catch (Exception e) {
-            url.suffix = generateSuffix(request.getUrl(), md, UUID.randomUUID().toString());
-            saveDB(url);
-        }
+        repository.insert(url.suffix, url.longUrl);
         return new ShortenURLResponse(request.getUrl(), "https://fff.com/" + suffix);
     }
 
@@ -46,19 +45,14 @@ public class ShortenerService {
         return longURL;
     }
 
-    private void saveDB(URL url) {
-        repository.save(url);   //TODO: not throwing duplicate entry
-    }
-
-    private String generateSuffix(String originalURL, MessageDigest md, String uuid) {
-        if (uuid != null) originalURL += uuid;
+    private String generateSuffix(String originalURL, MessageDigest md) {
+        originalURL += UUID.randomUUID().toString();
         md.update(originalURL.getBytes());
         byte[] digest = md.digest();
         StringBuilder sb = new StringBuilder();
         for (byte b : digest) {
             sb.append(Integer.toHexString(b & 0xff));
         }
-
         return sb.substring(0, 6);
     }
 }
