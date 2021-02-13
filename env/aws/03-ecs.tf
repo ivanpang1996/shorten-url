@@ -86,6 +86,44 @@ resource "aws_subnet" "subnet_1c" {
   map_public_ip_on_launch = true
 }
 
+resource "aws_security_group" "alb" {
+  name        = "url-shortener-alb"
+  description = "url-shortener-alb"
+
+  ingress {
+    from_port   = 80
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "ecs_service" {
+  name        = "url-shortener-service"
+  description = "url-shortener-service"
+
+  ingress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_lb_target_group" "url_shortener_group" {
   name        = "url-shortener-lb-tg"
   port        = 8080
@@ -98,7 +136,7 @@ resource "aws_lb" "alb" {
   name               = "url-shortener-lb"
   internal           = false
   load_balancer_type = "application"
-//  security_groups    = [aws_security_group.lb_sg.id]
+  security_groups    = [aws_security_group.alb.id]
   subnets            = [aws_subnet.subnet_1a.id ,aws_subnet.subnet_1b.id ,aws_subnet.subnet_1c.id]
 
   enable_deletion_protection = true
@@ -140,6 +178,7 @@ resource "aws_ecs_service" "url_shortener_service" {
   network_configuration {
     subnets = [aws_subnet.subnet_1a.id, aws_subnet.subnet_1b.id, aws_subnet.subnet_1c.id]
     assign_public_ip = true
+    security_groups = [aws_security_group.ecs_service.id]
   }
 
   load_balancer {

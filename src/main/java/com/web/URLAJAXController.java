@@ -5,6 +5,10 @@ import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 public class URLAJAXController {
+    @GetMapping(path = "/")
+    public @ResponseBody byte[] healthCheck() {
+        return new byte[1];
+    }
 
     @PostMapping(path = "/newurl")
     public ShortenURLResponse url(@RequestParam("url") String url) {
