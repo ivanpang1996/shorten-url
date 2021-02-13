@@ -12,25 +12,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.security.NoSuchAlgorithmException;
+
 @RestController
 public class URLAJAXController {
     @Autowired
     ShortenerService shortenerService;
 
     @GetMapping(path = "/")
-    public @ResponseBody byte[] healthCheck() {
+    public @ResponseBody
+    byte[] healthCheck() {
         return new byte[1];
     }
 
     @PostMapping(path = "/newurl")
-    public ShortenURLResponse url(@RequestBody ShortenURLRequest request) {
+    public ShortenURLResponse url(@RequestBody ShortenURLRequest request) throws NoSuchAlgorithmException {
         return shortenerService.save(request);
     }
 
     @GetMapping(path = "/{suffix}")
     public RedirectView get(@PathVariable("suffix") String suffix) {
         String result = shortenerService.get(suffix);
-        if (result == null) return redirectView("http://www.youtube.com");
         return redirectView(result);
     }
 

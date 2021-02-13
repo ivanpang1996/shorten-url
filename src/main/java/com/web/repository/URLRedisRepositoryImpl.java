@@ -1,4 +1,4 @@
-package com.web.redis;
+package com.web.repository;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -10,19 +10,19 @@ import java.time.Duration;
  * @author Ivanpang
  */
 @Repository
-public class ShortenerURLRepositoryImpl implements ShortenerURLRepository {
+public class URLRedisRepositoryImpl implements URLRedisRepository {
     ValueOperations<String, String> valueOperations;
     private RedisTemplate<String, String> redisTemplate;
 
 
-    public ShortenerURLRepositoryImpl(RedisTemplate<String, String> redisTemplate) {
+    public URLRedisRepositoryImpl(RedisTemplate<String, String> redisTemplate) {
         this.redisTemplate = redisTemplate;
         this.valueOperations = redisTemplate.opsForValue();
     }
 
     @Override
-    public void save(ShortenURL url) {
-        valueOperations.set(url.getShortURL(), url.getLongURL(), Duration.ofMinutes(30));
+    public void save(String suffix, String longURL) {
+        valueOperations.set(suffix, longURL, Duration.ofMinutes(30));
     }
 
     @Override
