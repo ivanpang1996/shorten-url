@@ -1,4 +1,4 @@
-package com.web;
+package com.web.service;
 
 public class ShortenURLRequest {
     private String url;
