@@ -1,6 +1,5 @@
 package com.web.service;
 
-import com.web.domain.URL;
 import com.web.repository.URLRedisRepository;
 import com.web.repository.URLRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +22,11 @@ public class ShortenerService {
     @Autowired
     URLRepository repository;
 
-    @Retryable(value = SQLIntegrityConstraintViolationException.class, maxAttempts = 10, backoff = @Backoff(3000))  //retry 10 time when duplicate entry
+    @Retryable(value = SQLIntegrityConstraintViolationException.class, maxAttempts = 10, backoff = @Backoff(3000))  //retry 10 times when duplicate entry
     public ShortenURLResponse save(ShortenURLRequest request) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");
         String suffix = generateSuffix(request.getUrl(), md);
-        System.out.println(suffix);
-
-        var url = new URL();
-        url.suffix = suffix;
-        url.longUrl = request.getUrl();
-        repository.insert(url.suffix, url.longUrl);
+        repository.insert(generateSuffix(request.getUrl(), md), request.getUrl());
         return new ShortenURLResponse(request.getUrl(), "https://fff.com/" + suffix);
     }
 
