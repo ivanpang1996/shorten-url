@@ -1,3 +1,3 @@
 #!/bin/bash -e
 
-grep -o ' - - ' access.log | wc -l
+wc -l access.log
