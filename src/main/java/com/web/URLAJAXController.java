@@ -20,8 +20,7 @@ public class URLAJAXController {
     ShortenerService shortenerService;
 
     @GetMapping(path = "/")
-    public @ResponseBody
-    byte[] healthCheck() {
+    public @ResponseBody byte[] healthCheck() {
         return new byte[1];
     }
 
