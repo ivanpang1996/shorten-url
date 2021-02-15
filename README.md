@@ -46,11 +46,11 @@ I want to keep the design as simple as possible. Therefore, I have made use of M
 Although it may lower the insert speed and there are some risk cannot insert after retrying 10 times, this design is simple.
 
 There are some approaches I would like to introduce.
-1. #### Pre-Generate Hash 
+#### 1. Pre-Generate Hash 
 This approach can make sure there are no collision of hash. The only thing is pre-generating the hash and save it. When the request has arrived, give it a hash.
-2. #### Range Hashing
+#### 2. Range Hashing
 Each microservice ask for the hashing vacancies and take responsibility for a range of hashing. For example, service A may produce hashing within 1-1000 and service B may produce hashing within 1001-2000. That make sure there is not collision.
-3. #### Zookeeper
+#### 3. Zookeeper
 Use Zookeeper as a centralized DB. Let Zookeeper to distribute the unique counter to the service. However, this approach introduce more complexity.
 
 
