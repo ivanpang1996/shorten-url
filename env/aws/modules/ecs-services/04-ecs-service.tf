@@ -18,6 +18,9 @@ resource "aws_ecs_service" "url_shortener_service" {
     container_port   = 8080
   }
 
+  lifecycle {
+    ignore_changes = [task_definition]
+  }
 }
 
 resource "aws_security_group" "ecs_service" {

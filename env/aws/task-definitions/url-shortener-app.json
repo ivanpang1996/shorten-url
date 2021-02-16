@@ -14,7 +14,20 @@
     ],
     "environment": null,
     "environmentFiles": [],
-    "secrets": null,
+    "secrets": [
+      {
+        "name": "DB_PASSWORD",
+        "valueFrom": "DB_PASSWORD"
+      },
+      {
+        "name": "DB_URL",
+        "valueFrom": "DB_URL"
+      },
+      {
+        "name": "DB_USER",
+        "valueFrom": "DB_USER"
+      }
+    ],
     "mountPoints": null,
     "volumesFrom": null,
     "hostname": null,
@@ -49,6 +62,16 @@
     "extraHosts": null,
     "ulimits": null,
     "dockerLabels": null,
-    "dependsOn": null
+    "dependsOn": null,
+    "command": [
+      "[ \"--maxmemory\"",
+      "\"100mb\"",
+      "\"--maxmemory-policy\"",
+      "\"allkeys-lru\"",
+      "\"--appendonly\"",
+      "\"no\"",
+      "\"--save\"",
+      "\"\" ]"
+    ]
   }
 ]
