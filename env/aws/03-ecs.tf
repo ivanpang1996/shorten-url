@@ -18,6 +18,28 @@ data "aws_subnet" "subnet_1c" {
   id = "subnet-c29907e3"
 }
 
+data "aws_security_group" "default" {
+  id = "sg-45612b4f"
+}
+
+resource "aws_security_group_rule" "db" {
+  type              = "ingress"
+  from_port         = 3306
+  to_port           = 3306
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = data.aws_security_group.default.id
+}
+
+resource "aws_security_group_rule" "redis" {
+  type              = "ingress"
+  from_port         = 6379
+  to_port           = 6379
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = data.aws_security_group.default.id
+}
+
 resource "aws_ecr_repository" "url_shortener" {
   name                 = var.project_name
   image_tag_mutability = "MUTABLE"

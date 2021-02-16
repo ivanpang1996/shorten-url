@@ -14,6 +14,6 @@ import javax.transaction.Transactional;
 public interface URLRepository extends JpaRepository<URL, String> {
     @Modifying
     @Transactional
-    @Query(nativeQuery = true, value = "insert into test.url (suffix, long_url) values (:suffix, :url)")
+    @Query(nativeQuery = true, value = "insert into url (suffix, long_url) values (:suffix, :url)")
     void insert(@Param("suffix") String suffix, @Param("url") String url);
 }

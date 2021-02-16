@@ -26,8 +26,8 @@ public class ShortenerService {
     public ShortenURLResponse save(ShortenURLRequest request) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");
         String suffix = generateSuffix(request.getUrl(), md);
-        repository.insert(generateSuffix(request.getUrl(), md), request.getUrl());
-        return new ShortenURLResponse(request.getUrl(), "https://fff.com/" + suffix);
+        repository.insert(suffix, request.getUrl());
+        return new ShortenURLResponse(request.getUrl(), "http://url-shortener-lb-1929857729.us-east-1.elb.amazonaws.com/" + suffix);   //TODO
     }
 
     public String get(String suffix) {
