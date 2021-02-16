@@ -19,7 +19,7 @@ resource "aws_codepipeline" "codepipeline" {
       output_artifacts = ["build_input"]
 
       configuration = {
-        OAuthToken = "dea1c59a9aebe9afc3dd01edcab4a118155caed5"
+        OAuthToken = data.external.oauth_token.result["OAUTH_TOKEN"]
         Owner = "ivanpang1996"
         Repo = "fhwuifhui"
         Branch    = "master"
@@ -269,4 +269,12 @@ EOF
 resource "aws_s3_bucket" "codepipeline_bucket" {
   bucket = "${var.project_name}-codepipeline-bucket-v3"
   acl    = "private"
+}
+
+# TODO: please run ../init/00-setup-secret.sh before "terraform apply"
+data "external" "oauth_token" {
+  program = [
+    "bash",
+    "-c",
+    "aws ssm get-parameter --name OAUTH_TOKEN | jq '{OAUTH_TOKEN: .Parameter.Value}'"]
 }
