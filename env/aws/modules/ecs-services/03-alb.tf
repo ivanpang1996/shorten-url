@@ -5,21 +5,15 @@ resource "aws_lb" "alb" {
   security_groups    = [aws_security_group.alb.id]
   subnets            = var.subnet_ids
 
-  enable_deletion_protection = true
+  enable_deletion_protection = false
 
-  //  access_logs {
-  //    bucket  = aws_s3_bucket.lb_logs.bucket
-  //    prefix  = "test-lb"
-  //    enabled = true
-  //  }
 }
 
 resource "aws_lb_listener" "listener" {
   load_balancer_arn = aws_lb.alb.arn
   port              = "80"
   protocol          = "HTTP"
-  //  ssl_policy        = "ELBSecurityPolicy-2016-08"
-  //  certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
+
 
   default_action {
     type             = "forward"
@@ -33,11 +27,13 @@ resource "aws_lb_target_group" "url_shortener_group" {
   protocol    = "HTTP"
   target_type = "ip"
   vpc_id      = var.vpc_id
+  depends_on = [aws_lb.alb]
 }
 
 resource "aws_security_group" "alb" {
   name        = "${var.service_name}-alb"
   description = "${var.service_name}-alb"
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = 80

@@ -1,8 +1,8 @@
 variable "project_name" {
-  default = "url_shortener"
+  default = "url-shortener"
 }
 
 variable "region" {
-  default = "ap-east-1"
+  default = "us-east-1"
 }
 

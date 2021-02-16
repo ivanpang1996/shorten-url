@@ -2,26 +2,20 @@ resource "aws_ecs_cluster" "url_shortener" {
   name = var.project_name
 }
 
-resource "aws_vpc" "vpc" {
-  cidr_block = "172.31.0.0/16"
+data "aws_vpc" "default_vpc" {
+  id = "vpc-1e2d8163"
 }
 
-resource "aws_subnet" "subnet_1a" {
-  vpc_id     = aws_vpc.vpc.id
-  cidr_block = "172.31.16.0/20"
-  map_public_ip_on_launch = true
+data "aws_subnet" "subnet_1a" {
+  id = "subnet-d3108d8c"
 }
 
-resource "aws_subnet" "subnet_1b" {
-  vpc_id     = aws_vpc.vpc.id
-  cidr_block = "172.31.0.0/20"
-  map_public_ip_on_launch = true
+data "aws_subnet" "subnet_1b" {
+  id = "subnet-2b78e84d"
 }
 
-resource "aws_subnet" "subnet_1c" {
-  vpc_id     = aws_vpc.vpc.id
-  cidr_block = "172.31.32.0/20"
-  map_public_ip_on_launch = true
+data "aws_subnet" "subnet_1c" {
+  id = "subnet-c29907e3"
 }
 
 resource "aws_ecr_repository" "url_shortener" {

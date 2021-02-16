@@ -28,8 +28,8 @@ resource "aws_iam_role_policy" "codebuild_policy" {
         {
             "Effect": "Allow",
             "Resource": [
-                "arn:aws:logs:ap-east-1:352531415519:log-group:/aws/codebuild/test",
-                "arn:aws:logs:ap-east-1:352531415519:log-group:/aws/codebuild/test:*"
+                "arn:aws:logs:us-east-1:352531415519:log-group:/aws/codebuild/test",
+                "arn:aws:logs:us-east-1:352531415519:log-group:/aws/codebuild/test:*"
             ],
             "Action": [
                 "logs:CreateLogGroup",
@@ -40,7 +40,7 @@ resource "aws_iam_role_policy" "codebuild_policy" {
         {
             "Effect": "Allow",
             "Resource": [
-                "arn:aws:s3:::codepipeline-ap-east-1-*"
+                "arn:aws:s3:::codepipeline-us-east-1-*"
             ],
             "Action": [
                 "s3:PutObject",
@@ -60,7 +60,7 @@ resource "aws_iam_role_policy" "codebuild_policy" {
                 "codebuild:BatchPutCodeCoverages"
             ],
             "Resource": [
-                "arn:aws:codebuild:ap-east-1:352531415519:report-group/test-*"
+                "arn:aws:codebuild:us-east-1:352531415519:report-group/test-*"
             ]
         }
     ]

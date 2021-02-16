@@ -7,4 +7,5 @@ resource "aws_ecs_task_definition" "task_definition" {
   memory = 2048
   network_mode = "awsvpc"
   execution_role_arn = var.ecs_task_execution_role_arn
+
 }

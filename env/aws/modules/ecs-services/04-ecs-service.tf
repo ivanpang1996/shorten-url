@@ -4,13 +4,7 @@ resource "aws_ecs_service" "url_shortener_service" {
   cluster         = var.cluster_id
   task_definition = aws_ecs_task_definition.task_definition.arn
   desired_count   = 3
-  //  iam_role        = aws_iam_role.ecs_task_execution_role.arn
   depends_on      = [var.ecs_task_execution_role_policy]
-
-  //  ordered_placement_strategy {
-  //    type  = "binpack"
-  //    field = "cpu"
-  //  }
 
   network_configuration {
     subnets = var.subnet_ids
@@ -24,15 +18,12 @@ resource "aws_ecs_service" "url_shortener_service" {
     container_port   = 8080
   }
 
-  //  placement_constraints {
-  //    type       = "memberOf"
-  //    expression = "attribute:ecs.availability-zone in [us-west-2a, us-west-2b]"
-  //  }
 }
 
 resource "aws_security_group" "ecs_service" {
   name        = "${var.service_name}-service"
   description = "${var.service_name}-service"
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = 8080
