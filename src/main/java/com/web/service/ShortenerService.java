@@ -1,6 +1,5 @@
 package com.web.service;
 
-import com.web.repository.URLRedisRepository;
 import com.web.repository.URLRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.retry.annotation.Backoff;
@@ -17,8 +16,8 @@ import java.util.UUID;
  */
 @Service
 public class ShortenerService {
-    @Autowired
-    URLRedisRepository redisRepository;
+//    @Autowired
+//    URLRedisRepository redisRepository;
     @Autowired
     URLRepository repository;
 
@@ -31,11 +30,11 @@ public class ShortenerService {
     }
 
     public String get(String suffix) {
-        String url = redisRepository.findLongURLBySuffix(suffix);
-        if (url != null) return url;
+//        String url = redisRepository.findLongURLBySuffix(suffix);
+//        if (url != null) return url;
 
         String longURL = repository.findById(suffix).orElseThrow().longUrl;
-        redisRepository.save(suffix, longURL);
+//        redisRepository.save(suffix, longURL);
         return longURL;
     }
 

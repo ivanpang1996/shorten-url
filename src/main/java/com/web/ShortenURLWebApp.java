@@ -16,16 +16,16 @@ public class ShortenURLWebApp {
         SpringApplication.run(ShortenURLWebApp.class, args);
     }
 
-    @Bean
-    JedisConnectionFactory jedisConnectionFactory() {
-        return new JedisConnectionFactory();
-    }
-
-    @Bean
-    RedisTemplate<String, String> redisTemplate() {
-        RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setConnectionFactory(jedisConnectionFactory());
-        return redisTemplate;
-    }
+//    @Bean
+//    JedisConnectionFactory jedisConnectionFactory() {
+//        return new JedisConnectionFactory();
+//    }
+//
+//    @Bean
+//    RedisTemplate<String, String> redisTemplate() {
+//        RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
+//        redisTemplate.setKeySerializer(new StringRedisSerializer());
+//        redisTemplate.setConnectionFactory(jedisConnectionFactory());
+//        return redisTemplate;
+//    }
 }
