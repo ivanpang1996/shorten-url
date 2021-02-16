@@ -27,7 +27,7 @@ public class ShortenerService {
         MessageDigest md = MessageDigest.getInstance("MD5");
         String suffix = generateSuffix(request.getUrl(), md);
         repository.insert(suffix, request.getUrl());
-        return new ShortenURLResponse(request.getUrl(), "http://url-shortener-lb-1929857729.us-east-1.elb.amazonaws.com/" + suffix);   //TODO
+        return new ShortenURLResponse(request.getUrl(), "http://url-shortener-lb-1711713777.us-east-1.elb.amazonaws.com//" + suffix);
     }
 
     public String get(String suffix) {
