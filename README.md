@@ -6,6 +6,9 @@ please see Q1A & Q1B & Q1C under "sh" directory
 please see Q2 under "sh" directory
 
 # Q3 :
+I think this is a good opportunity to let me familiar with AWS environment. Therefore, I have chosen ECS cluster + Fargate rather than K8s cluster (also cheaper :D ).
+Also, I have chosen to use multiple AWS service to implement this system (eg. CodeBuild, CodePipeline, RDS).
+
 #### Endpoints:
 ```
 GET http://url-shortener-lb-1711713777.us-east-1.elb.amazonaws.com/471f77
@@ -31,7 +34,7 @@ Source (GitHub)     ->    Build(CodeBuild)        ->   Deploy(ECS)
 #### Infrastructure Design
 ![SystemDesign](https://i.imgur.com/e9wVRus.png)
 
-* Running as an ECS cluster.
+* Running as an ECS cluster + Fargate.
 * Set up an application load balancer to traffic down to the service (HTTP only because I cannot request a certificate for Amazon-owned domain names).
 * Running multiple tasks with same task definition in different regions.
 * Use ElastiCache to cache and speed up the GET request (Currently, I have ran my own redis as a sidecar container in the task. 
