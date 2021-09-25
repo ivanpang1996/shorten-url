@@ -1,11 +1,3 @@
-
-# Q1 : 
-please see Q1A & Q1B & Q1C under "sh" directory
-
-# Q2 : 
-please see Q2 under "sh" directory
-
-# Q3 :
 I think this is a good opportunity to let me familiar with AWS environment. Therefore, I have chosen ECS cluster + Fargate rather than K8s cluster (also cheaper :D ).
 Also, I have chosen to use multiple AWS service to implement this system (eg. CodeBuild, CodePipeline, RDS).
 
