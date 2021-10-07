@@ -1,3 +1,4 @@
+## Introduction
 I think this is a good opportunity to let me familiar with AWS environment. Therefore, I have chosen ECS cluster + Fargate rather than K8s cluster (also cheaper :D ).
 Also, I have chosen to use multiple AWS service to implement this system (eg. CodeBuild, CodePipeline, RDS).
 
@@ -15,7 +16,7 @@ Content-Type: application/json
 ```
 
 
-## - Infrastructure
+## Infrastructure
 ### CI/CD:
 For the CI/CD part, I have used 2 of the AWS Services ( CodeBuild & CodePipeline)
 
@@ -35,7 +36,7 @@ Source (GitHub)     ->    Build(CodeBuild)        ->   Deploy(ECS)
 * Use AWS SSM to keep the sensitive data secret and load to the container as environment variable
 * Use Terraform to provision all the resources above.
 
-## - System Design
+## System Design
 
 ##### Assumption1:  READ request much more than WRITE request => 100:1
 
